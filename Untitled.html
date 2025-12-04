@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human-Centered Technology Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .footer-text {
+            position: fixed;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .links a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .logo {
+            opacity: 0.8;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        #qr-container {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+        }
+
+        #qr-container img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="qr-container">
+        <!-- Using a relative path for the click link, and the absolute URL for the QR code data -->
+        <a href="phone_page.html">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hctlab.github.io/phone_page.html" alt="QR Code Link to Phone Page">
+        </a>
+    </div>
+
+    <div class="footer-text">
+        <h1>human-centered technology lab</h1>
+        <div class="subtitle">dr. maxi heitmayer</div>
+        <div class="links">
+            <a href="https://scholar.google.com/citations?user=B_3V_zwAAAAJ&hl=en&inst=12320807419666651891&oi=ao" target="_blank">research</a>
+            <a href="mailto:heitmayer@rowan.edu">contact</a>
+        </div>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Rowan_University_logo.svg" alt="Rowan University">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const qrContainer = document.getElementById('qr-container');
+            
+            // Initial position variables
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 150);
+            
+            // Velocity variables, calculated by setSpeed
+            let dx = 0;
+            let dy = 0;
+
+            const BASELINE_WIDTH = 1200; // Standard desktop width for reference
+            const BASE_SPEED = 3;        // Base speed for 1200px width
+
+            /**
+             * Calculates the speed based on current window size to keep the animation speed proportional.
+             */
+            function setSpeed() {
+                // Calculate the scaling factor (e.g., if width is 600px, factor is 0.5)
+                const scaleFactor = window.innerWidth / BASELINE_WIDTH;
+                
+                // Calculate new speed, and ensure a minimum speed of 1 to avoid freezing
+                let newSpeed = Math.max(1, BASE_SPEED * scaleFactor);
+
+                // Preserve the original direction (dx and dy are initialized later)
+                const directionX = dx === 0 ? 1 : Math.sign(dx);
+                const directionY = dy === 0 ? 1 : Math.sign(dy);
+
+                dx = newSpeed * directionX;
+                dy = newSpeed * directionY;
+            }
+
+            // Initialize speed before starting the animation
+            setSpeed(); 
+
+            function animate() {
+                // Update position
+                x += dx;
+                y += dy;
+                
+                // Check for collisions with edges and bounce
+                if (x + 150 >= window.innerWidth || x <= 0) {
+                    dx = -dx;
+                }
+                if (y + 150 >= window.innerHeight || y <= 0) {
+                    dy = -dy;
+                }
+                
+                // Apply position
+                qrContainer.style.left = x + 'px';
+                qrContainer.style.top = y + 'px';
+                
+                requestAnimationFrame(animate);
+            }
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                // 1. Recalculate speed
+                setSpeed();
+                
+                // 2. Adjust position to ensure it stays on screen after resize
+                if (x + 150 > window.innerWidth) x = window.innerWidth - 150;
+                if (y + 150 > window.innerHeight) y = window.innerHeight - 150;
+            });
+
+            animate();
+        });
+    </script>
+</body>
+</html>
