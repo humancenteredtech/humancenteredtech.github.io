@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human-Centered Technology Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .footer-text {
+            position: fixed;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .links a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .logo {
+            opacity: 0.8;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        #qr-container {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+        }
+
+        #qr-container img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="qr-container">
+        <!-- The QR code is now clickable and links to the new page -->
+        <a href="phone_page.html" target="_blank">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=phone_page.html" alt="QR Code Link to Phone Page">
+        </a>
+    </div>
+
+    <div class="footer-text">
+        <h1>human-centered technology lab</h1>
+        <div class="subtitle">dr. maxi heitmayer</div>
+        <div class="links">
+            <a href="https://scholar.google.com/citations?user=B_3V_zwAAAAJ&hl=en&inst=12320807419666651891&oi=ao" target="_blank">research</a>
+            <a href="mailto:heitmayer@rowan.edu">contact</a>
+        </div>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Rowan_University_logo.svg" alt="Rowan University">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const qrContainer = document.getElementById('qr-container');
+            
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 150);
+            
+            let dx = 3;
+            let dy = 3;
+            
+            function animate() {
+                // Update position
+                x += dx;
+                y += dy;
+                
+                if (x + 150 >= window.innerWidth || x <= 0) {
+                    dx = -dx;
+                }
+                if (y + 150 >= window.innerHeight || y <= 0) {
+                    dy = -dy;
+                }
+                
+                qrContainer.style.left = x + 'px';
+                qrContainer.style.top = y + 'px';
+                
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                if (x + 150 > window.innerWidth) x = window.innerWidth - 150;
+                if (y + 150 > window.innerHeight) y = window.innerHeight - 150;
+            });
+
+            animate();
+        });
+    </script>
+</body>
+</html>
