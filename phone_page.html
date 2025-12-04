@@ -31,9 +31,6 @@
         }
         
         #inversion-text {
-            /* Restrict height to 75% of the viewport height (75vh).
-               This leaves the bottom 25% empty for the footer, preventing overlap.
-            */
             height: 75vh;
             width: 100%;
             
@@ -44,7 +41,7 @@
             
             font-size: 5vw; 
             line-height: 1.2;
-            text-align: center; /* Centers the text lines relative to each other */
+            text-align: center;
             
             white-space: pre-line; 
         }
@@ -99,7 +96,6 @@
         .logo img {
             height: 40px;
             width: auto;
-            /* Initial state: Normal color */
             filter: grayscale(0) invert(0); 
             transition: filter 0.1s;
         }
@@ -137,7 +133,7 @@ AREN'T YOU?</div>
         }
 
         let lastToggleTime = 0;
-        const toggleInterval = 500; // 500ms
+        const toggleInterval = 250;
 
         function inversionLoop(timestamp) {
             if (timestamp - lastToggleTime >= toggleInterval) {
