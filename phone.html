@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Digital art project by the Human-Centered Technology Lab at Rowan University exploring smartphone usage patterns.">
     <title>Human-Centered Technology Lab</title>
     <style>
         * {
@@ -21,13 +22,6 @@
             display: flex;
             flex-direction: column;
             align-items: center; 
-            
-            transition: background-color 0.1s, color 0.1s;
-        }
-
-        body.inverted {
-            background-color: black;
-            color: white;
         }
         
         #inversion-text {
@@ -44,6 +38,13 @@
             text-align: center;
             
             white-space: pre-line; 
+            
+            transition: opacity 0.1s;
+            opacity: 1;
+        }
+
+        #inversion-text.flashing {
+            opacity: 0;
         }
 
         @media (max-width: 600px) {
@@ -68,7 +69,6 @@
             font-size: 16px;
             font-weight: 400;
             color: inherit; 
-            transition: color 0.1s;
         }
 
         .footer-text h1 { margin-bottom: 10px; }
@@ -82,6 +82,7 @@
         }
 
         .links a {
+            color: black;
             text-decoration: none;
         }
 
@@ -96,13 +97,6 @@
         .logo img {
             height: 40px;
             width: auto;
-            filter: grayscale(0) invert(0); 
-            transition: filter 0.1s;
-        }
-        
-
-        .inverted .logo img {
-            filter: grayscale(1) invert(1); 
         }
     </style>
 </head>
@@ -128,12 +122,14 @@ AREN'T YOU?</div>
     </div>
 
     <script>
+        const textElement = document.getElementById('inversion-text');
+
         function toggleInversion() {
-            document.body.classList.toggle('inverted');
+            textElement.classList.toggle('flashing');
         }
 
         let lastToggleTime = 0;
-        const toggleInterval = 600;
+        const toggleInterval = 800; // Added missing semicolon here
 
         function inversionLoop(timestamp) {
             if (timestamp - lastToggleTime >= toggleInterval) {
